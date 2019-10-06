@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.game__container {
+  padding: 10px;
+}
+
+.game__field {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.container__field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  box-shadow: 1px 1px 0 0 #ddd;
+  width: 30%;
+  height: 150px;
+  margin-top: 20px;
+}
+
+.field__cell {
+  display: none;
+  background-color: tomato;
+  border: 1px solid #ddd;
+  /* border-radius: 50%; */
+  width: 100px;
+  height: 100px;
+}
+
+.active {
+  display: block;
+}
