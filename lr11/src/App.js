@@ -5,19 +5,7 @@ import "./App.css";
 export default class App extends Component {
   state = {
     sensors: [],
-    name: "",
-    randomNames: [
-      "astonishing",
-      "sincere",
-      "zesty",
-      "languid",
-      "knowledgeable",
-      "bedroom",
-      "inform",
-      "ratty",
-      "plausible",
-      "direful"
-    ]
+    name: ""
   };
 
   addSensor = (name = this.state.name) => {
@@ -29,10 +17,9 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    // fetch(`/word?key=O8UGNJDY&number=10`)
-    //   .then(data => data.json())
-    //   .then(data => data.map(name => this.addSensor(name)));
-    this.state.randomNames.map(name => this.addSensor(name));
+    fetch(`https://random-word-api.herokuapp.com/word?key=O8UGNJDY&number=10`)
+      .then(data => data.json())
+      .then(data => data.map(name => this.addSensor(name)));
   }
 
   render() {
