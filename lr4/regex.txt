@@ -1,0 +1,2 @@
+/https?:\/\/(\w+.)+\/(\S)+/gi url
+\w+@\w+\.\w+ email
