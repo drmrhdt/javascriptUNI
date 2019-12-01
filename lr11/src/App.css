@@ -24,11 +24,8 @@
 .app-container {
   width: 90%;
   margin: 0 auto;
-  margin-top: 20px;
 }
 
-.sensors-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.sensors-container :last-child {
+  margin-right: auto;
 }

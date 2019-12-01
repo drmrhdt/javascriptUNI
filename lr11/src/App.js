@@ -42,8 +42,8 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="app-container">
-          <div className="sensors-container">
+        <div className="app-container mb-0 mt-4 mx-auto">
+          <div className="d-flex justify-content-between flex-wrap">
             {this.state.sensors.map(sensor => (
               <Sensor
                 key={sensor.id}
