@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Sensor from "./components/Sensor";
+import { Input, Button } from "reactstrap";
 import "./App.css";
 
 export default class App extends Component {
@@ -16,8 +17,24 @@ export default class App extends Component {
     }));
   };
 
+  handleInput = e => {
+    this.setState({ name: e.target.value });
+  };
+
+  deleteSensor = id => {
+    this.setState(prevState => ({
+      sensors: prevState.sensors.filter(sensor => sensor.id !== id)
+    }));
+  };
+
+  onClick = () => {
+    if (this.state.name) {
+      this.addSensor();
+    }
+  };
+
   componentDidMount() {
-    fetch(`https://random-word-api.herokuapp.com/word?key=O8UGNJDY&number=10`)
+    fetch(`https://random-word-api.herokuapp.com/word?key=EFCC1YGX&number=10`)
       .then(data => data.json())
       .then(data => data.map(name => this.addSensor(name)));
   }
@@ -25,16 +42,29 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.sensors.map(sensor => (
-          <Sensor
-            key={sensor.id}
-            id={sensor.id}
-            title={sensor.name}
-            status={sensor.status}
+        <div className="app-container">
+          <div className="sensors-container">
+            {this.state.sensors.map(sensor => (
+              <Sensor
+                key={sensor.id}
+                id={sensor.id}
+                title={sensor.name}
+                status={sensor.status}
+                deleteSensor={this.deleteSensor}
+              />
+            ))}
+          </div>
+          <Input
+            className="form-control input-lg mb-3"
+            value={this.state.name}
+            onChange={this.handleInput}
+            placeholder="Enter name for sensor"
           />
-        ))}
-        <input name={this.state.name} placeholder="Enter name for sensor" />
-        <button onClick={this.addSensor}>Add new sensor</button>
+          <Button color="primary" className="btn-lg" onClick={this.onClick}>
+            Add sensor
+          </Button>
+          '
+        </div>
       </div>
     );
   }
