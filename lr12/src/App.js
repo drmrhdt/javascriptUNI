@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Person from "./Person";
 import "./App.css";
 
 class App extends Component {
@@ -8,44 +9,62 @@ class App extends Component {
     secondName: ""
   };
 
-  onChangeInputFirstName = e => {
-    this.setState({ firstName: e.target.value });
+  onChangeInput = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
-  onChangeInputSecondName = e => {
-    this.setState({ secondName: e.target.value });
+  changePerson = (id, firstName, secondName) => {
+    this.setState(prevState => ({
+      people: prevState.people.map(person =>
+        person.id === id
+          ? { id: id, firstName: firstName, secondName: secondName }
+          : person
+      )
+    }));
   };
 
   addPerson = () => {
-    const id = Math.floor(Math.random() * 10000);
-    this.setState(prevState => ({
-      people: prevState.people.concat({
-        id: id,
-        firstName: this.state.firstName,
-        secondName: this.state.secondName
-      })
-    }));
-    console.log(this.state);
+    if (this.state.firstName && this.state.secondName) {
+      const id = Math.floor(Math.random() * 10000);
+      this.setState(prevState => ({
+        people: prevState.people.concat({
+          id: id,
+          firstName: this.state.firstName,
+          secondName: this.state.secondName
+        })
+      }));
+      this.clearInputs();
+    }
   };
 
-  onClick = () => {
-    this.addPerson();
+  clearInputs = () => {
+    this.setState({ firstName: "", secondName: "" });
+  };
+
+  deletePerson = id => {
+    this.setState(prevState => ({
+      people: prevState.people.filter(person => person.id !== id)
+    }));
   };
 
   render() {
     console.log(this.state);
     return (
-      <div className="App">
-        {this.state.people.length
-          ? this.state.people.map(person => (
-              <div key={Math.random()}>
-                {person.id} {person.firstName} {person.secondName}
-                <button className="btn btn-primary">Edit</button>
-                <button className="btn btn-danger">Delete</button>
-              </div>
-            ))
-          : null}
-
+      <div className="App w-75 mx-auto">
+        <ul className="mb-4">
+          {this.state.people.length
+            ? this.state.people.map(person => (
+                <Person
+                  key={Math.random()}
+                  id={person.id}
+                  firstName={person.firstName}
+                  secondName={person.secondName}
+                  deletePerson={this.deletePerson}
+                  changePerson={this.changePerson}
+                />
+              ))
+            : null}
+        </ul>
         <form>
           <div className="form-group row">
             <label htmlFor="inputFirstName" className="col-sm-2 col-form-label">
@@ -58,7 +77,8 @@ class App extends Component {
                 id="inputFirstName"
                 placeholder="Введите имя"
                 value={this.state.firstName}
-                onChange={this.onChangeInputFirstName}
+                name="firstName"
+                onChange={this.onChangeInput}
               />
             </div>
           </div>
@@ -78,12 +98,13 @@ class App extends Component {
                 id="inputSecondName"
                 placeholder="Введите фамилию"
                 value={this.state.secondName}
-                onChange={this.onChangeInputSecondName}
+                name="secondName"
+                onChange={this.onChangeInput}
               />
             </div>
           </div>
         </form>
-        <button className="btn btn-primary" onClick={this.onClick}>
+        <button className="btn btn-primary" onClick={this.addPerson}>
           Добавить
         </button>
         {/* <button classNameName="btn btn-primary" disabled> */}
