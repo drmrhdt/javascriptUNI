@@ -60,7 +60,7 @@ export default class Person extends Component {
       );
     } else if (this.state.mode === "edit") {
       return (
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between mb-2">
           <div className="d-flex justify-content-between w-75">
             <input
               className="form-control"

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Person from "./Person";
+import List from "components/List";
 import "./App.css";
 
 class App extends Component {
@@ -50,21 +50,14 @@ class App extends Component {
   render() {
     console.log(this.state);
     return (
-      <div className="App w-75 mx-auto">
-        <ul className="mb-4">
-          {this.state.people.length
-            ? this.state.people.map(person => (
-                <Person
-                  key={Math.random()}
-                  id={person.id}
-                  firstName={person.firstName}
-                  secondName={person.secondName}
-                  deletePerson={this.deletePerson}
-                  changePerson={this.changePerson}
-                />
-              ))
-            : null}
-        </ul>
+      <div className="App w-75 mx-auto pt-4">
+        {this.state.people.length ? (
+          <List
+            people={this.state.people}
+            deletePerson={this.deletePerson}
+            changePerson={this.changePerson}
+          />
+        ) : null}
         <form>
           <div className="form-group row">
             <label htmlFor="inputFirstName" className="col-sm-2 col-form-label">
